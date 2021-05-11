@@ -40,6 +40,21 @@
     kubectl apply -f bad.yaml
 
 
+### Apply MustRunAsNonRoot  to runASUser
+
+    kubectl edit psp eks.privileged
+
+  and change
+
+    runAsUser:
+      rule: RunAsAny
+  To
+
+    runAsUser:
+      rule: MustRunAsNonRoot    
+
+
+
 ### Optimize yaml file
 
     apiVersion: v1
@@ -53,5 +68,7 @@
         securityContext:
           allowPrivilegeEscalation: false
           privileged: false
+          readOnlyRootFilesystem: true
       hostNetwork: false
       hostIPC: false
+      hostPID: false
